@@ -9,7 +9,7 @@ beforeEach(() => {
   enemyBoard = Gameboard()
 })
 
-describe('Player Instantiation', () => {
+describe('Player Object Instantiation', () => {
   it('Creates a player with a name', () => {
     expect(player.name).toBe('John')
   })

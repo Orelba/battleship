@@ -1,6 +1,6 @@
 import Ship from '../src/modules/ship'
 
-describe('Ship object initialization', () => {
+describe('Ship Object Instantiation', () => {
   it('Only accepts args of number type', () => {
     const msg = 'You must pass a number as the length argument to Ship()'
     expect(() => Ship('3')).toThrow(msg)

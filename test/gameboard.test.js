@@ -9,8 +9,8 @@ beforeEach(() => {
   testBoard = [...gameBoard.board]
 })
 
-describe('Gameboard Initialization', () => {
-  it('Initializes a 10x10 board correctly', () => {
+describe('Gameboard Object Instantiation', () => {
+  it('Instantiates a 10x10 board correctly', () => {
     const board = new Array(100).fill({ hasShip: false, isShot: false })
 
     expect(gameBoard.board).toEqual(board)
