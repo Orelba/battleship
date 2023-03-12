@@ -36,7 +36,7 @@ describe('makeRandomAttack() method', () => {
     expect(player.makeRandomAttack(enemyBoard)).toBe(true)
   })
 
-  it('Only attacks a cell which is not shot yet', () => {
+  it('Only attacks cells that are not shot yet', () => {
     // Loop the board and make each cell isShot = true, only leave one cell isShot = false
     for (let i = 0; i < enemyBoard.board.length; i += 1) {
       if (i !== 43) enemyBoard.board[i].isShot = true
