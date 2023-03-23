@@ -26,6 +26,19 @@ describe('createLocationArray() method', () => {
   })
 })
 
+describe('getNeighbors() method', () => {
+  it('Returns an array of the indexes of all neighbor cells', () => {
+    // I am sorting each one to check array equality easily
+    const topRowPlacement = gameBoard.getNeighbors([1, 11, 21]).sort((a, b) => a - b)
+    const cornerPlacement = gameBoard.getNeighbors([97, 98, 99]).sort((a, b) => a - b)
+    const middlePlacement = gameBoard.getNeighbors([45, 55, 65, 75]).sort((a, b) => a - b)
+
+    expect(topRowPlacement).toEqual([0, 2, 10, 12, 20, 22, 30, 31, 32])
+    expect(cornerPlacement).toEqual([86, 87, 88, 89, 96])
+    expect(middlePlacement).toEqual([34, 35, 36, 44, 46, 54, 56, 64, 66, 74, 76, 84, 85, 86])
+  })
+})
+
 describe('checkCollisions() method', () => {
   it('Rejects ship placement that collides with the x axis wall', () => {
     expect(gameBoard.checkCollisions([8, 9, 10, 11])).toBe(false)
@@ -70,6 +83,20 @@ describe('placeShip() method', () => {
     testBoard[42] = { hasShip: ship, isShot: false }
 
     expect(gameBoard.board).toMatchObject(testBoard)
+  })
+
+  it('Rejects ship placement that does not leave space around other ships', () => {
+    const shipOne = Ship(3)
+
+    gameBoard.board[41] = { hasShip: shipOne, isShot: false }
+    gameBoard.board[42] = { hasShip: shipOne, isShot: false }
+    gameBoard.board[43] = { hasShip: shipOne, isShot: false }
+
+    const partOfErrorMsg = 'is not valid.'
+    expect(() => gameBoard.placeShip(shipOne, 52, 'x')).toThrow(partOfErrorMsg)
+    expect(() => gameBoard.placeShip(shipOne, 41, 'x')).toThrow(partOfErrorMsg)
+    expect(gameBoard.placeShip(shipOne, 64, 'x')).toBe(true)
+    expect(gameBoard.placeShip(shipOne, 72, 'y')).toBe(true)
   })
 })
 
