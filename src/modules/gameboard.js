@@ -71,6 +71,7 @@ const Gameboard = () => {
     // eslint-disable-next-line max-len
     if (collisions.some((n) => [n, n + 1].every((indexes) => shipLocationArray.includes(indexes)))) return false
 
+    // No collisions found
     return true
   }
 
@@ -79,18 +80,38 @@ const Gameboard = () => {
     return true
   }
 
-  const placeShip = (ship, location, axis = 'x') => {
+  const isPlacementValid = (ship, location, axis) => {
     const locationArray = createLocationArray(ship, location, axis)
     const neighbors = getNeighborArray(locationArray)
-    const msg = `Placement of ship of length ${ship.length} at index ${location} on axis ${axis.toUpperCase()} is not valid.`
-    if (!checkCollisions(locationArray) || !checkIfNeighborCellsAreEmpty(neighbors)) {
-      throw new Error(msg)
+
+    if (checkCollisions(locationArray) && checkIfNeighborCellsAreEmpty(neighbors)) return true
+    return false
+  }
+
+  const placeShip = (ship, location, axis = 'x') => {
+    const locationArray = createLocationArray(ship, location, axis)
+
+    if (!isPlacementValid(ship, location, axis)) {
+      throw new Error(`Placement of ship of length ${ship.length} at index ${location} on axis ${axis.toUpperCase()} is not valid.`)
     }
 
     locationArray.forEach((loc) => {
       board[loc].hasShip = ship
     })
     return true
+  }
+
+  const placeShipInRandomLocation = (ship) => {
+    // Invalid location to start the loop
+    let randomLoc = 99
+    let axis = 'x'
+
+    while (!isPlacementValid(ship, randomLoc, axis)) {
+      randomLoc = Math.floor(Math.random() * 98)
+      axis = (Math.random() > 0.5) ? 'x' : 'y'
+    }
+
+    placeShip(ship, randomLoc, axis)
   }
 
   const checkIfShotHit = (location) => !!(board[location].hasShip)
@@ -118,9 +139,11 @@ const Gameboard = () => {
   return {
     board,
     createLocationArray,
-    getNeighbors: getNeighborArray,
+    getNeighborArray,
     checkCollisions,
+    isPlacementValid,
     placeShip,
+    placeShipInRandomLocation,
     checkIfShotHit,
     receiveAttack,
     isGameOver,

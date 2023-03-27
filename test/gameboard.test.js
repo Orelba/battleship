@@ -26,12 +26,12 @@ describe('createLocationArray() method', () => {
   })
 })
 
-describe('getNeighbors() method', () => {
+describe('getNeighborArray() method', () => {
   it('Returns an array of the indexes of all neighbor cells', () => {
     // I am sorting each one to check array equality easily
-    const topRowPlacement = gameBoard.getNeighbors([1, 11, 21]).sort((a, b) => a - b)
-    const cornerPlacement = gameBoard.getNeighbors([97, 98, 99]).sort((a, b) => a - b)
-    const middlePlacement = gameBoard.getNeighbors([45, 55, 65, 75]).sort((a, b) => a - b)
+    const topRowPlacement = gameBoard.getNeighborArray([1, 11, 21]).sort((a, b) => a - b)
+    const cornerPlacement = gameBoard.getNeighborArray([97, 98, 99]).sort((a, b) => a - b)
+    const middlePlacement = gameBoard.getNeighborArray([45, 55, 65, 75]).sort((a, b) => a - b)
 
     expect(topRowPlacement).toEqual([0, 2, 10, 12, 20, 22, 30, 31, 32])
     expect(cornerPlacement).toEqual([86, 87, 88, 89, 96])
@@ -97,6 +97,26 @@ describe('placeShip() method', () => {
     expect(() => gameBoard.placeShip(shipOne, 41, 'x')).toThrow(partOfErrorMsg)
     expect(gameBoard.placeShip(shipOne, 64, 'x')).toBe(true)
     expect(gameBoard.placeShip(shipOne, 72, 'y')).toBe(true)
+  })
+})
+
+describe('placeShipInRandomLocation()', () => {
+  it('Places all ships randomly', () => {
+    const ship1 = Ship(5)
+    const ship2 = Ship(4)
+    const ship3 = Ship(3)
+    const ship4 = Ship(3)
+    const ship5 = Ship(2)
+
+    gameBoard.placeShipInRandomLocation(ship1)
+    gameBoard.placeShipInRandomLocation(ship2)
+    gameBoard.placeShipInRandomLocation(ship3)
+    gameBoard.placeShipInRandomLocation(ship4)
+    gameBoard.placeShipInRandomLocation(ship5)
+
+    // 17 is sum of length of all ships
+    const shipCellsOnBoard = gameBoard.board.filter((cell) => cell.hasShip).length
+    expect(shipCellsOnBoard).toBe(17)
   })
 })
 
