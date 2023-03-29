@@ -66,6 +66,21 @@ main {
   height: var(--size);
   width: var(--size);
   border: 2px solid rgb(255, 255, 255);
+  position: relative;
+}
+
+.board-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.darken {
+  background-color: rgba(28, 28, 28, 0.45);
+  z-index: 2;
 }
 
 .cell {
