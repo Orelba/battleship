@@ -18,7 +18,6 @@
         "dist"
     ],
     "rules": {
-        "no-console": "off", // TODO: Delete
         "semi": 0,
         "linebreak-style": 0 // NPM .json files use LF while the rest of the project uses CRLF
     }
