@@ -111,6 +111,7 @@ export default class Game {
     UI.hideOverlay()
     UI.renderPlayerGameboard(Game.playerBoard)
     UI.renderEnemyGameboard(Game.enemyBoard)
+    UI.addDarkBoardOverlay('player')
   }
 
   static resetGameState() {
@@ -133,6 +134,8 @@ export default class Game {
   }
 
   static end(announceWinnerString) {
+    UI.removeDarkBoardOverlay('player')
+    UI.removeDarkBoardOverlay('enemy')
     UI.renderEndGameOverlay(announceWinnerString)
     UI.initRestartGameEventListener(Game.restart)
   }
@@ -142,7 +145,11 @@ export default class Game {
     Game.enemy.makeRandomAttack(Game.playerBoard)
     UI.renderPlayerGameboard(Game.playerBoard)
     if (Game.playerBoard.isGameOver()) Game.end('Enemy Wins!')
-    else Game.takesTurn = 'Player'
+    else {
+      Game.takesTurn = 'Player'
+      UI.addDarkBoardOverlay('player')
+      UI.removeDarkBoardOverlay('enemy')
+    }
   }
 
   static async makePlayerMove(index) {
@@ -153,6 +160,8 @@ export default class Game {
       if (Game.enemyBoard.isGameOver()) Game.end('You Win!')
       else {
         Game.takesTurn = 'Enemy'
+        UI.addDarkBoardOverlay('enemy')
+        UI.removeDarkBoardOverlay('player')
         await Game.sleepRandomTimeBetween(300, 600)
         Game.makeEnemyMove()
       }

@@ -9,11 +9,13 @@ export default class UI {
 
   // Gameboard
   static renderGridCells(gridElement) {
+    const boardOverlay = gridElement.querySelector('.board-overlay')
+
     for (let i = 0; i < 100; i += 1) {
       const cell = document.createElement('div')
       cell.classList.add('cell')
 
-      gridElement.appendChild(cell)
+      gridElement.insertBefore(cell, boardOverlay)
     }
   }
 
@@ -82,6 +84,28 @@ export default class UI {
         UI.renderMiss(eBoardCells[idx])
       }
     })
+  }
+
+  static addDarkBoardOverlay(boardOwner) {
+    const pBoardOverlay = document.querySelector('.board.friendly .board-overlay')
+    const eBoardOverlay = document.querySelector('.board.enemy .board-overlay')
+
+    if (boardOwner === 'player') {
+      pBoardOverlay.classList.add('darken')
+    } else if (boardOwner === 'enemy') {
+      eBoardOverlay.classList.add('darken')
+    }
+  }
+
+  static removeDarkBoardOverlay(boardOwner) {
+    const pBoardOverlay = document.querySelector('.board.friendly .board-overlay')
+    const eBoardOverlay = document.querySelector('.board.enemy .board-overlay')
+
+    if (boardOwner === 'player') {
+      pBoardOverlay.classList.remove('darken')
+    } else if (boardOwner === 'enemy') {
+      eBoardOverlay.classList.remove('darken')
+    }
   }
 
   // Handle board Events
