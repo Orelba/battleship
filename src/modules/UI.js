@@ -23,7 +23,7 @@ export default class UI {
 
   static renderHit(cellElement) {
     const img = document.createElement('img')
-    img.src = '/images/hit.png'
+    img.src = './images/hit.png'
     img.height = 35
     img.width = 35
 
