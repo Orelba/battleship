@@ -30,17 +30,16 @@ export default class Game {
   static isPlacementDone = false
 
   // Game Sequence
-
   static init() {
-    UI.loadGameUI()
-    Game.preGameOverlay()
+    UI.loadGameBoards()
+    Game.pregameOverlay()
     UI.initEnemyBoardEventListener(Game.makePlayerMove)
   }
 
   static restart() {
-    Game.resetGameState()
+    Game.resetState()
     UI.clearAllGameboardCells()
-    Game.preGameOverlay()
+    Game.pregameOverlay()
   }
 
   static setupEnemyBoard() {
@@ -97,7 +96,7 @@ export default class Game {
     }
   }
 
-  static preGameOverlay() {
+  static pregameOverlay() {
     UI.renderPlacementOverlay()
     UI.initRotateBtnEventListener()
     UI.initPlacementBoardEventListeners(Game.hoverOnPlacementBoard, Game.placeOnPlacementBoard)
@@ -114,7 +113,7 @@ export default class Game {
     UI.addDarkBoardOverlay('player')
   }
 
-  static resetGameState() {
+  static resetState() {
     Game.playerBoard = Gameboard()
     Game.enemyBoard = Gameboard()
     Game.placementBoard = Gameboard()

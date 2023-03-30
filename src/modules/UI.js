@@ -1,5 +1,5 @@
 export default class UI {
-  static loadGameUI() {
+  static loadGameBoards() {
     const pBoard = document.querySelector('.board.friendly')
     const eBoard = document.querySelector('.board.enemy')
 
